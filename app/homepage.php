@@ -10,10 +10,8 @@ class Homepage extends Controller
 
     public function Show($f3)
     {
-        $sql = 'SELECT * FROM todos';
-        $todos = $this->db->exec($sql);
-
-        $f3->set('todos', $todos);
+        $todos = new \App\Models\Todos($this->db);
+        $f3->set('todos', $todos->all());
 
         $f3->set('title', 'Homepage');
         $f3->set('container', 'homepage.htm');
