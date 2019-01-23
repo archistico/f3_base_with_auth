@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-class Homepage
+class Homepage extends Controller
 {
     public function beforeroute($f3)
     {
@@ -10,9 +10,8 @@ class Homepage
 
     public function Show($f3)
     {
-        $db = new \DB\SQL($f3->get('DB_APP'));
         $sql = 'SELECT * FROM todos';
-        $todos = $db->exec($sql);
+        $todos = $this->db->exec($sql);
 
         $f3->set('todos', $todos);
 

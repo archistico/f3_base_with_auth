@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-class Todo
+class Todo extends Controller
 {
     public function beforeroute($f3)
     {
@@ -13,6 +13,7 @@ class Todo
 
     public function __construct($id, $todo)
     {
+        parent::__construct();
         $this->id = $id;
         $this->todo = $todo;
     }
@@ -24,14 +25,12 @@ class Todo
 
     public function Delete($f3, $params)
     {
-        $db = new \DB\SQL($f3->get('DB_APP'));
-
         $id = $params['id'];
         $sql = "DELETE FROM todos WHERE id=$id";
 
-        $db->begin();
-        $db->exec($sql);
-        $db->commit();
+        $this->db->begin();
+        $this->db->exec($sql);
+        $this->db->commit();
 
         // ridirigi
         $f3->reroute('/');
@@ -44,11 +43,10 @@ class Todo
         $todo = \App\Utility::CleanString($todo);
 
         if (isset($todo)) {
-            $db = new \DB\SQL($f3->get('DB_APP'));
-            $db->begin();
             $sql = "INSERT into todos values(null, '$todo')";
-            $db->exec($sql);
-            $db->commit();
+            $this->db->begin();
+            $this->db->exec($sql);
+            $this->db->commit();
         }
 
         // ridirigi
