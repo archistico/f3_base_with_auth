@@ -5,14 +5,7 @@ class Homepage
 {
     public function beforeroute($f3)
     {
-        $auth = \App\Auth::Auth($f3);
-        if (!$auth) {
-            \App\Flash::instance()->addMessage('Login required', 'danger');
-            $f3->set('logged', false);
-            $f3->reroute('/login');
-        } else {
-            $f3->set('logged', true);
-        }
+        \App\Auth::PageCheckAuth($f3);
     }
 
     public function Show($f3)

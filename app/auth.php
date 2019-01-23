@@ -3,6 +3,17 @@ namespace App;
 
 class Auth
 {
+    public static function PageCheckAuth($f3)
+    {
+        if (!\App\Auth::Auth($f3)) {
+            \App\Flash::instance()->addMessage('Login required', 'danger');
+            $f3->set('logged', false);
+            $f3->reroute('/login');
+        } else {
+            $f3->set('logged', true);
+        }
+    }
+
     public function Login($f3, $args)
     {
         // CSRF
