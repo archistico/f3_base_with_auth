@@ -40,34 +40,15 @@ class Auth
         $csrf = $f3->get('COOKIE.sessionName');
 
         if (isset($csrf)) {
-            echo "<br>csrf ";
-            var_dump($csrf);
             $csrfArray = explode(".", $csrf);
-            var_dump($csrfArray);
             $sessionUserid = "SESSION." . $csrfArray[0];
-            $sessionPassword = "SESSION." . $csrfArray[1];
-
-            echo "<br>sessionUserid ";
-            var_dump($sessionUserid);
-            echo "<br>sessionPassword ";
-            var_dump($sessionPassword);
+            $sessionPassword = "SESSION." . $csrfArray[0].'_password';
 
             $f3_sessionUserid = $f3->get($sessionUserid);
             $f3_sessionPassword = $f3->get($sessionPassword);
 
-            echo "<br>f3_sessionUserid ";
-            var_dump($f3_sessionUserid);
-            echo "<br>f3_sessionPassword ";
-            var_dump($f3_sessionPassword);
-            die();
-
-            //if (is_null($f3_sessionUserid)) { return false; }
-            //if (is_null($f3_sessionPassword)) { return false; }
-
-            //$utente = trim($f3_sessionUserid);
-            //$password = trim($f3_sessionPassword);
-            $utente = $f3_sessionUserid;
-            $password = $f3_sessionPassword;
+            $utente = trim($f3_sessionUserid);
+            $password = trim($f3_sessionPassword);
 
             if (isset($utente) && isset($password)) {
                 $db = new \DB\SQL($f3->get('DB_APP'));
@@ -114,10 +95,10 @@ class Auth
                 if ($login_result) {
 
                     $f3->set('COOKIE.sessionName', $csrf);
-
                     $csrfArray = explode(".", $csrf);
+
                     $sessionUserid = "SESSION." . $csrfArray[0];
-                    $sessionPassword = "SESSION." . $csrfArray[1];
+                    $sessionPassword = "SESSION." . $csrfArray[0].'_password';
 
                     $f3->set($sessionUserid, $utente);
                     $f3->set($sessionPassword, $password);
