@@ -3,10 +3,10 @@ namespace App;
 
 class Utility
 {
-    public static function CleanString($testo)
+    public static function CleanString($text)
     {
-        $testo = str_replace('"', "", $testo);
-        $testo = str_replace("'", "", $testo);
-        return $testo;
+        $text = str_replace('"', "", $text);
+        $text = str_replace("'", "", $text);
+        return $text;
     }
 }

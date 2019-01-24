@@ -26,11 +26,9 @@ class Todo extends Controller
     public function Delete($f3, $params)
     {
         $id = $params['id'];
-        $sql = "DELETE FROM todos WHERE id=$id";
 
-        $this->db->begin();
-        $this->db->exec($sql);
-        $this->db->commit();
+        $t = new \App\Models\Todos($this->db);
+        $t->delete($id);
 
         // ridirigi
         $f3->reroute('/');
